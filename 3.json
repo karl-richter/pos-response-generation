@@ -1,0 +1,56 @@
+{
+    "word": "parked", 
+    "lemma": "park", 
+    "NE": "",
+    "POS_fine": "VBN",
+    "POS_coarse": "VERB",
+    "arc": "ROOT",
+    "modifiers": [
+        {
+        "word": "Where", 
+        "lemma": "where", 
+        "NE": "", 
+        "POS_fine": "WRB", 
+        "POS_coarse": "ADV", 
+        "arc": "advmod", 
+        "modifiers": []
+        }, 
+        {
+        "word": "is", 
+        "lemma": "be", 
+        "NE": "", 
+        "POS_fine": "VBZ", 
+        "POS_coarse": "VERB", 
+        "arc": "auxpass", 
+        "modifiers": []
+        }, 
+        {
+        "word": "car", 
+        "lemma": "car", 
+        "NE": "", 
+        "POS_fine": "NN", 
+        "POS_coarse": "NOUN", 
+        "arc": "nsubjpass", 
+        "modifiers": [
+            {
+            "word": "my", 
+            "lemma": "-PRON-", 
+            "NE": "", 
+            "POS_fine": "PRP$", 
+            "POS_coarse": "ADJ", 
+            "arc": "poss", 
+            "modifiers": []
+            }
+        ]
+        }, 
+        {
+        "word": "?", 
+        "lemma": "?", 
+        "NE": "",
+        "POS_fine": ".", 
+        "POS_coarse": "PUNCT", 
+        "arc": "punct", 
+        "modifiers": []
+        }
+    ]
+}
