@@ -50,8 +50,13 @@ for doc in docs:
             trees.append(TreeObject(to_nltk_tree(sent.root), 1, sent.text))
 
 for tree in trees:
+    print('')
     tree.text.pretty_print()
     print('Count: ', tree.count)
     for example in tree.examples:
-        print('Examples: ', example)
+        print('Example: ', example)
+    print('')
     print('----------------------------')
+
+print('Total number of questions:', len(docs))
+print('Number of unique questions:', len(trees))
