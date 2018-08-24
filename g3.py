@@ -5,17 +5,18 @@ from nltk import Tree
 nlp = spacy.load('en')
 trees = []
 
-class Object:
+class TreeObject:
     text = ""
     count = 0
     examples = []
     def __init__(self, text, count, example):
         self.text = text
         self.count = count
+        self.examples = []
         self.examples.append(example)
-        print('Debug: ', example)
-    def foundDublicate(self):
+    def foundDublicate(self, example):
         self.count += 1
+        self.examples.append(example)
 
 docs = [nlp("What is the location of my car"), 
         nlp("Where is my car parked"), 
@@ -39,16 +40,18 @@ for doc in docs:
     #[to_nltk_tree(sent.root).pretty_print() for sent in doc.sents]
     for sent in doc.sents:
         treeAlreadyExists = False
-        textInSent = sent.text
         for tree in trees:
+            treeAlreadyExists = False
             if tree.text == to_nltk_tree(sent.root):
                 treeAlreadyExists = True
-                tree.foundDublicate()
-                print('Found dublicate:', textInSent)
+                tree.foundDublicate(sent.text)
+
         if not treeAlreadyExists:
-            trees.append(Object(to_nltk_tree(sent.root), 1, textInSent))
+            trees.append(TreeObject(to_nltk_tree(sent.root), 1, sent.text))
 
 for tree in trees:
-    print(tree.count, ': ', tree.text)
+    tree.text.pretty_print()
+    print('Count: ', tree.count)
     for example in tree.examples:
         print('Examples: ', example)
+    print('----------------------------')
