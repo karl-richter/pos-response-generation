@@ -35,9 +35,9 @@ def to_nltk_tree(node):
     else:
         return tok_format(node)
 
+# Detect unique trees
 for doc in docs:
-    #print(doc)
-    #[to_nltk_tree(sent.root).pretty_print() for sent in doc.sents]
+    # Check whether a tree already exist in trees
     for sent in doc.sents:
         treeAlreadyExists = False
         for tree in trees:
@@ -45,10 +45,11 @@ for doc in docs:
             if tree.text == to_nltk_tree(sent.root):
                 treeAlreadyExists = True
                 tree.foundDublicate(sent.text)
-
+        # If a tree does not exist yet - add tree to trees
         if not treeAlreadyExists:
             trees.append(TreeObject(to_nltk_tree(sent.root), 1, sent.text))
 
+# Print all objects in trees (unique detected trees)
 for tree in trees:
     print('')
     tree.text.pretty_print()
