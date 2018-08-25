@@ -1,7 +1,6 @@
 import spacy
 from nltk import Tree
 
-
 nlp = spacy.load('en')
 trees = []
 
@@ -18,13 +17,41 @@ class TreeObject:
         self.count += 1
         self.examples.append(example)
 
-docs = [nlp("What is the location of my car"), 
-        nlp("Where is my car parked"), 
-        nlp("Where is my car"),
-        nlp("is my car nearby"),  
-        nlp("is my car nearby"),  
-        nlp("is the car at home"),
-        nlp("is the car at home")]
+docs = [
+nlp("where is my car"),
+nlp("where is my car located"),
+nlp("where is my car parked"),
+nlp("where did I park"),
+nlp("what is the location of my car"),
+nlp("where is my car"),
+nlp("where did I park my car"),
+nlp("where is my benz"),
+nlp("give me the car location"),
+nlp("where is my car"),
+nlp("could you please tell me where my car is"),
+nlp("where is my car"),
+nlp("where are you"),
+nlp("where did i park my car"),
+nlp("where is my car"),
+nlp("where do I find my car"),
+nlp("give me the location of my car"),
+nlp("where is my car parked"),
+nlp("where is my car"),
+nlp("where did i park"),
+nlp("where did I left my car"),
+nlp("where did I park my ride"),
+nlp("where did my brother leave my car"),
+nlp("where is my car"),
+nlp("where is my car"),
+nlp("what is the address of my car"),
+nlp("where is my car"),
+nlp("where is my car by"),
+nlp("which address did I park my car at"),
+nlp("what is the car location"),
+nlp("where did I park my car"),
+nlp("where is the car parked"),
+nlp("where is the car located"),
+nlp("where did I left my car")]
 
 def tok_format(tok):
     return tok.dep_ + '(' + tok.pos_ + ')'
@@ -39,14 +66,13 @@ def to_nltk_tree(node):
 for doc in docs:
     # Check whether a tree already exist in trees
     for sent in doc.sents:
-        treeAlreadyExists = False
+        treeIsUnique = True
         for tree in trees:
-            treeAlreadyExists = False
             if tree.text == to_nltk_tree(sent.root):
-                treeAlreadyExists = True
+                treeIsUnique = False
                 tree.foundDublicate(sent.text)
         # If a tree does not exist yet - add tree to trees
-        if not treeAlreadyExists:
+        if treeIsUnique:
             trees.append(TreeObject(to_nltk_tree(sent.root), 1, sent.text))
 
 # Print all objects in trees (unique detected trees)
@@ -56,6 +82,7 @@ for tree in trees:
     print('Count: ', tree.count)
     for example in tree.examples:
         print('Example: ', example)
+    print('String: ', tree.text)
     print('')
     print('----------------------------')
 
