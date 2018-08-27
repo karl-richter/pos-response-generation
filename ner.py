@@ -1,36 +1,41 @@
 import spacy
-from spacy.lang.en.examples import sentences
 from spacy import displacy
 
-def invertPerson(obj):
-    if "my" in obj:
-        return obj.replace("my","your")
-    else:
-        return obj
-
 nlp = spacy.load('en_core_web_sm')
-doc = nlp("The Google")
+adv = nlp("where is my car located")
+attr = nlp("what is the car location")
+dative = nlp("give me the vehicle position")
 
-print(doc.text)
-#for token in doc:
-#    if(token.pos_ == 'VERB' or token.pos_ == 'NOUN'):
-#        print(token.text,  "Index:",token.i,  "Pos:",token.pos_,  "Norm:",token.norm_,  "Dep:",token.dep_,  "Shape:",token.shape_, "TokenIsAlpha:", token.is_alpha, "TokenIsStop:", token.is_stop)
+advLocation = 'located'
+advCar = 'car'
+attrLocation = 'location'
+attrCar = 'car'
+dativeLocation = 'location'
+dativeCar = 'car'
 
+for node in adv:
+    print(node.text, node.dep_, node.pos_)
+    if(node.pos_ == 'VERB' and node.dep_ == 'ccomp'):
+        advLocation = node.text
+    elif(node.pos_ == 'NOUN' and node.dep_ == 'nsubjpass'):
+        advCar = node.text
+print('---------------------')
 
-for ent in doc.ents:
-    print(ent.text, ent.label_)
-    #for token in ent:
-        #print(token.text)
+for node in attr:
+    print(node.text, node.dep_, node.pos_)
+    if(node.pos_ == 'NOUN' and node.dep_ == 'nsubj'):
+        attrLocation = node.text
+    elif(node.pos_ == 'NOUN' and (node.dep_ == 'pobj' or node.dep_ == 'compound')):
+        attrCar = node.text
+print('---------------------')
 
-# Next week DATE
-# Madrid GPE
-
-#for chunk in doc.noun_chunks:
-#     print(chunk.text, "RootText:", chunk.root.text, "RootDep:", chunk.root.dep_, "RootHeadText:", chunk.root.head.text)
-
-#trees = doc.print_tree()
-#print(trees[0])
-
-#Displacy to create a graph out of the text https://spacy.io/usage/visualizers
-#options = {'compact': True, 'bg': '#09a3d5', 'color': 'white', 'font': 'Source Sans Pro'}
-#displacy.serve(doc, style='dep', options=options)
+for node in dative:
+    print(node.text, node.dep_, node.pos_)
+    if(node.pos_ == 'NOUN' and node.dep_ == 'dobj'):
+        dativeLocation = node.text
+    elif(node.pos_ == 'NOUN' and (node.dep_ == 'pobj'or node.dep_ == 'compound')):
+        dativeCar = node.text
+print('---------------------')
+print('Your', advCar, 'is', advLocation, 'at...')
+print('The', attrLocation, 'of your', attrCar, 'is...')
+print('The', dativeLocation, 'of your', dativeCar, 'is...')
