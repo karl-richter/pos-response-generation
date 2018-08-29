@@ -1,7 +1,8 @@
 import spacy
 
 nlp = spacy.load('en')
-doc = nlp("where is my car parked")
+doc = nlp("")
+reply = []
 
 # Print Adv
 def printAdv(tree):
@@ -10,10 +11,14 @@ def printAdv(tree):
             printSubject(node.children)
             printVerbPass(node.children)
             print(node.dep_, node.text)
+            reply.append(node.text)
             print('-------')
             printVerb(node.children)
             printObject(node.children)
             printPrep(node.children)
+            print('MANUAL at')
+            reply.append('at')
+            print('-------')
 
 # Print Attr
 def printAttr(tree):
@@ -22,6 +27,7 @@ def printAttr(tree):
             printSubject(node.children)
             printVerbPass(node.children)
             print(node.dep_, node.text)
+            reply.append(node.text)
             print('-------')
             printVerb(node.children)
             printObject(node.children)
@@ -33,14 +39,28 @@ def printDative(tree):
         if(node.dep_ == 'ROOT'):
             printObject(node.children)
             printPrep(node.children)
-            
+            print('MANUAL at')
+            reply.append('at')
+            print('-------')
+
+
+# Invert the person from 1st to 2nd
+def changePerson(word):
+    if word == 'my':
+        return 'your'
+    elif word == 'I':
+        return 'you'
+    else:
+        return word
+
 # Print Subject
 def printSubject(tree):
     for node in tree:
         if(node.dep_ == 'nsubj' or node.dep_ == 'nsubjpass' or (node.dep_ == 'compound' and node.pos_ == 'NOUN') or (node.dep_ == 'amod' and node.head.pos_ == 'NOUN')):
             printDetPoss(node.children)
             printSubject(node.children)
-            print(node.dep_, node.text)
+            print(node.dep_, changePerson(node.text))
+            reply.append(changePerson(node.text))
             print('-------')
             printPrep(node.children)
         elif(node.dep_ == 'ccomp'):
@@ -51,6 +71,7 @@ def printVerb(tree):
     for node in tree:
         if(node.dep_ == 'ccomp' or node.dep_ == 'acl'):
             print(node.dep_, node.text)
+            reply.append(changePerson(node.text))
             print('-------')
         elif(node.dep_ == 'nsubj' or node.dep_ == 'nsubjpass'):
             printVerb(node.children)
@@ -60,6 +81,7 @@ def printVerbPass(tree):
     for node in tree:
         if(node.dep_ == 'auxpass' or node.dep_ == 'aux'):
             print(node.dep_, node.text)
+            reply.append(changePerson(node.text))
             print('-------')
 
 # Print Object
@@ -68,6 +90,7 @@ def printObject(tree):
         if(node.dep_ == 'pobj' or node.dep_ == 'dobj'):
             printDetPoss(node.children)
             print(node.dep_, node.text)
+            reply.append(changePerson(node.text))
             print('-------')
             printPrep(node.children)
 
@@ -75,7 +98,8 @@ def printObject(tree):
 def printDetPoss(tree):
     for node in tree:
         if(node.dep_ == 'det' or node.dep_ == 'poss'):
-            print(node.dep_, node.text)
+            print(node.dep_, changePerson(node.text))
+            reply.append(changePerson(node.text))
             print('-------')
 
 # Print Prep
@@ -83,6 +107,7 @@ def printPrep(tree):
     for node in tree:
         if(node.dep_ == 'prep'):
             print(node.dep_, node.text)
+            reply.append(node.text)
             print('-------')
             printObject(node.children)
 
@@ -103,3 +128,6 @@ printResponse(doc)
 for node in doc:
     print(node.text, node.dep_, node.pos_,
           [child.dep_ for child in node.children])
+
+print('-------')
+print(' '.join(reply), '...')
