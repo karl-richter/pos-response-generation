@@ -1,7 +1,7 @@
 import spacy
 
 nlp = spacy.load('en')
-doc = nlp("")
+doc = nlp("where did my brother park the car")
 reply = []
 
 # Print Adv
@@ -41,6 +41,16 @@ def printDative(tree):
             printPrep(node.children)
             print('MANUAL at')
             reply.append('at')
+            print('-------')
+
+# Print Dative Object
+def printDativeObj(tree):
+    for node in tree:
+        if(node.dep_ == 'ROOT'):
+            printObject(node.children)
+            printPrep(node.children)
+            print('MANUAL is')
+            reply.append('is')
             print('-------')
 
 
@@ -122,6 +132,9 @@ def printResponse(doc):
         elif(node.dep_ == 'dative'):
             print('Mode: Dative')
             printDative(doc)
+        elif(node.dep_ == 'dobj'):
+            print('Mode: Dative Object')
+            printDativeObj(doc)
 
 printResponse(doc)
 
