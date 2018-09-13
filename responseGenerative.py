@@ -1,7 +1,7 @@
 import spacy
 
 nlp = spacy.load('en')
-doc = nlp("where did my brother park the car")
+doc = nlp("where is my car")
 reply = []
 
 # Print Adv

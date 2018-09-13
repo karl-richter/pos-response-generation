@@ -4,7 +4,7 @@ from spacy import displacy
 nlp = spacy.load('en_core_web_sm')
 adv = nlp("where is my car located")
 attr = nlp("what is the car location")
-dative = nlp("give me the vehicle position")
+dative = nlp("give me the house position")
 
 advLocation = 'located'
 advCar = 'car'
