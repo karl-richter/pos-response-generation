@@ -43,15 +43,30 @@ https://nlp.stanford.edu/software/dependencies_manual.pdf
 ## Related Work
 ### Generating Topic-Based Chatbot Responses (Swedish research paper 2017)
 
-## Implementation
-### Syntactic Analysis
-#### Part-of-speech-tagging
-### Word Classification
-Algorythmic Approach
-AI Approach
-Text-Vectorization
-### Text Generation
-#### Template-based-text-generation
+## Analysis
+
+
+### Research Setup
+Research environment
+User group
+NLP Framework
+
+
+### Syntactic-analysis-based approach
+
+### Templated-based approach
+
+### Preparation for Evaluation
+Host Python Backend on AWS Lambda
+Recieve JSON Get-Requests from Website
+Saven incoming Request-Body in Database (AWS S3)
+Generate two Responses
+Send Response back to Front-end
+Recieve Follow-up with same Request ID from User (Which Response is better)
+(requestID, question, questionType, responseSA, responseT, SAisBetterResponse)
+
+FrontEnd in JS
+Send and Recieve Calls from Backend on AWS
 
 ## Evaluation
 
@@ -61,7 +76,9 @@ Text-Vectorization
 
 
 
+jhfgjsdhgfjdfhgjdfhgjdfhg
 
+gdfgndfkgdkfgdfkg
 
 
 

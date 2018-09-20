@@ -1,0 +1,91 @@
+<head>
+    <script>
+            function getResponseOne(){
+                const req = new XMLHttpRequest();
+                const url='https://480jprba40.execute-api.eu-central-1.amazonaws.com/v1/pos-response-generation?greeting=alright';
+                req.open("GET", url);
+                req.send();
+                req.onreadystatechange=(e)=>{
+                    var jsonResponse = JSON.parse(req.response);
+                    document.getElementById('one').innerHTML = jsonResponse.body;
+                }
+                document.getElementById('one').style.display = 'block';
+            }
+            function getResponseTwo(){
+                const req = new XMLHttpRequest();
+                const url='https://jsonplaceholder.typicode.com/posts';
+                req.open("GET", url);
+                req.send();
+                req.onreadystatechange=(e)=>{
+                    var jsonResponse = JSON.parse(req.response);
+                    document.getElementById('two').innerHTML = jsonResponse[2].title;
+                }
+                document.getElementById('two').style.display = 'block';
+            }
+    </script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #questionTextfield {
+            font-size: 22px;
+            width: 50vw;
+            height: 50px;
+            padding: 10px;
+            margin: 0;
+            border: none;
+            background-color:whitesmoke;
+        }
+
+        #generateButton {
+            font-size: 18px;
+            width: 10vw;
+            height: 50px;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            outline: inherit;
+            background-color: darkblue;
+            color: white;
+        }
+
+        #generateButton:hover {
+            background-color: blue;
+        }
+
+        #form {
+            margin-left: 20vw;
+            margin-top: 40vh;
+            margin-bottom: 30px;
+        }
+
+        .response {
+            font-size: 20px;
+            width: 60vw;
+            height: 40px;
+            padding: 10px;
+            margin: 0;
+            margin-top: 10px;
+            margin-left: 20vw;
+            background-color:whitesmoke;
+            display: none;
+            border-radius: 5px;
+            line-height: 40px;
+        }
+
+        .response:hover {
+            cursor: pointer;
+            color: white;
+            background-color:dimgrey;
+        }   
+    </style>
+</head>
+<body>
+    <form id="form">
+        <input id="questionTextfield" type="text" placeholder="Where did I park my car?">
+        <input id="generateButton" type="button" onclick="getResponseOne(); getResponseTwo()" value="Generate">
+    </form>
+    <div id="one" class="response">Your car is located at...</div>
+    <div id="two" class="response">Your car is parked at...</div>
+</body>
