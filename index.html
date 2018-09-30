@@ -2,7 +2,7 @@
     <script>
             function getResponseOne(){
                 const req = new XMLHttpRequest();
-                const url='https://480jprba40.execute-api.eu-central-1.amazonaws.com/v1/pos-response-generation?greeting=alright';
+                const url='https://480jprba40.execute-api.eu-central-1.amazonaws.com/v1/pos-response-generation?greeting=' + document.getElementById('questionTextfield').value;
                 req.open("GET", url);
                 req.send();
                 req.onreadystatechange=(e)=>{

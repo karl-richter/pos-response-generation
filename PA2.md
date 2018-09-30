@@ -38,23 +38,51 @@ With question words
 Subject/Object questions
 https://nlp.stanford.edu/software/dependencies_manual.pdf
 
+
 ## Methodologies
 
 ## Related Work
 ### Generating Topic-Based Chatbot Responses (Swedish research paper 2017)
 
 ## Analysis
+This paper analyzes two approaches to generate responses for a number of utterances of the intent 'getCarLocation'. The goal of this paper is to evaluate, whether a syntactic-analysis-based-approach for natural language response generation (NLG) in voice assistant applications archives better results, than a template-based approach. The template-based approach for NLG is currently state-of-the-art and used commercial speech applications such as the Google Assistant and Amazon Alexa. Although generating natural language by using a template does not correspond to the scientific definition of NLG (https://www.mitpressjournals.org/doi/pdfplus/10.1162/0891201053630291), that is supported by most linguists, it  combines the stability that is needed for commercial applications and the individuality that comes with generated replies. The approach that is developed in this paper, is based on analyzing the syntax of a question and identifying the role each word has in the overall sentence. 
 
+### Hypothesis
+The underlying hypothesis for this research is, that the number of grammatical different utterances for a specific intent are finite and and all of these utteranes can be grammatically correct answered by rearrangement of the utterance. Therefore, a limited number of people were asked for different utterances for a specific intent, with the goal to analyze the utterances and identify the most relevant grammatical structures. These grammatical structures were then rearranged to generate gramatically correct answers and implemented into an algorythm. This algorythm was then tested by a high number of people to measure its accuracy
 
 ### Research Setup
-Research environment
-User group
-NLP Framework
+#### Intent
+The intent that was chosen to be analyzed in this research will be referred to as _GetCarLocation_. An example utterance of the intent can be "What is the location of my car?". The intent can be part of a Voice Assistant application that provides Connected Car services like the _MercedesMe_ skill on Amazon Alexa (reference). _GetCarLocation_ was chosen because the question expects the answer to contain a specific content, in this case an address of a car, that can be answered by a computer system by retrieved data from an API. Apart from that, the question expects the answer to have a certain level of complexity, that is higher than of a yes/no question, but lower than of a question that would require the computer system to understand implicit context. Last, the quesition is not too domain-specific and relevant in every-day life, which makes it easier for Studienteilnehmer to relate to the question and come up with individual utterances.
 
+#### User group
+To collect a number of utterances to analyze, ... people were asked for each 5 utterances for the intent _GetCarLocation_. The two factors that can have an influence on how a user formulates an intent are the mother-tongue and the previous experience with Voice Assistants. The objects of research that were chosen for the paper had diverse experiences with Voice Assistants and mother-tongues. the befragten ... people, had ... different mother-tongues, including Spanish, German, Russian and Mandarin. \nThe total number of utterances that were collected during the research are 67, out of these ... questions were excluded from the analysis because the do no not match the intent of getting the address of a car, but can be categorized as yes/no questions etc. as yes or no would linguistically be the expected answer.
+
+#### NLP Framework
+The NLP Library that was used for this paper is SpaCy. SpaCy is a Python Library by Explosion.ai, a Berlin-based Start-up, that offers neural models for industry-standart NLP and is currently one of the fastest and most accurate syntactic parsers, according to Choi et al. (https://aclweb.org/anthology/P/P15/P15-1038.pdf). SpaCy features word-tagging, syntactic-parsing and named-entity-recognition (NER). The neural model that was used for this project is the small_en_core_web_ model with ... words and a part-of-speech accurcy of 97.04 percent (https://spacy.io/models/en#en_core_web_sm).
+
+#### Evaluation Methodology
+The methodology that was used in this paper is crowd-testing, which is an approach to recieve feedback from a high number of people
 
 ### Syntactic-analysis-based approach
+#### Utterance analysis (create dependecy trees)
+#### Create aggregated dependecy trees
+#### Analyze Question-Answer rearrangement
+#### Implementation
+Part-of-speech-tagging
+Algorythmic Question classification (Type of question)
+Algorythmic Question-Answer rearrangement
+#### Algorithm testing with given utterances
+#### Evaluate algorithm based on new user question (2AFC)
 
-### Templated-based approach
+### Template-based Approach
+#### Utterance analysis (identify available slots)
+#### Create templates (for different utterances)
+#### Analyze patterns between utterances and responses
+#### Implementation
+Algorythmic slot identification (NER)
+Algorythmic template selection (Type of question)
+#### Algorithm testing with given utterances
+#### Evaluate algorithm based on new user question (2AFC)
 
 ### Preparation for Evaluation
 Host Python Backend on AWS Lambda
@@ -73,15 +101,6 @@ Send and Recieve Calls from Backend on AWS
 ## Conclusion
 ...
 ### Outlook
-
-
-
-jhfgjsdhgfjdfhgjdfhgjdfhg
-
-gdfgndfkgdkfgdfkg
-
-
-
 
 
 
