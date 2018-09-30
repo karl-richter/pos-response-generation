@@ -64,7 +64,14 @@ The NLP Library that was used for this paper is SpaCy. SpaCy is a Python Library
 The methodology that was used in this paper is crowd-testing, which is an approach to recieve feedback from a high number of people
 
 ### Syntactic-analysis-based approach
+The syntactic-analysis-based approach is based on syntactic language parsing. Syntax is the formal grammar of a language. In natural language, syntax provides the rules to put together words to form components of sentences and to put together these components to form sentences (http://l2r.cs.uiuc.edu/~danr/Teaching/CS598-05/Lectures/Roxana.pdf). Parsing is the process of analysing a string of symbols, confirming to the rules of a formal grammar (https://en.wikipedia.org/wiki/Parsing). In linguistics, parsing is used to understand the exact meaning of a specific sentence or a word. The methodology of syntactic parsing that is used for this approach is part-of-speech-tagging (POS), that assigns a tag to each word of the sentence, that contains the part (i.e. noun, verb, adverb etc.) and the role (i.e. subject, object etc.) the word has in the sentence.
+
 #### Utterance analysis (create dependecy trees)
+Each of the given sample utterances has been processed using SpaCy's syntactic parser, the results have been visualized using dependency trees. The processed and tagged version of the question "What is the location of my car?" looks the follwing:
+<Image Parsed Sentence (Pos and Dep for each word)>
+The dependency tree of the question looks like the following:
+<Image Dependency Tree Question>
+
 #### Create aggregated dependecy trees
 #### Analyze Question-Answer rearrangement
 #### Implementation
