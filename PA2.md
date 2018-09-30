@@ -48,7 +48,7 @@ https://nlp.stanford.edu/software/dependencies_manual.pdf
 This paper analyzes two approaches to generate responses for a number of utterances of the intent 'getCarLocation'. The goal of this paper is to evaluate, whether a syntactic-analysis-based-approach for natural language response generation (NLG) in voice assistant applications archives better results, than a template-based approach. The template-based approach for NLG is currently state-of-the-art and used commercial speech applications such as the Google Assistant and Amazon Alexa. Although generating natural language by using a template does not correspond to the scientific definition of NLG (https://www.mitpressjournals.org/doi/pdfplus/10.1162/0891201053630291), that is supported by most linguists, it  combines the stability that is needed for commercial applications and the individuality that comes with generated replies. The approach that is developed in this paper, is based on analyzing the syntax of a question and identifying the role each word has in the overall sentence. 
 
 ### Hypothesis
-The underlying hypothesis for this research is, that the number of grammatical different utterances for a specific intent are finite and and all of these utteranes can be grammatically correct answered by rearrangement of the utterance. Therefore, a limited number of people were asked for different utterances for a specific intent, with the goal to analyze the utterances and identify the most relevant grammatical structures. These grammatical structures were then rearranged to generate gramatically correct answers and implemented into an algorythm. This algorythm was then tested by a high number of people to measure its accuracy
+The underlying hypothesis for this research is, that the number of grammatical different utterances for a specific intent are finite and all of these utteranes can be grammatically correct answered by rearrangement of the utterance. Therefore, a limited number of people were asked for different utterances for a specific intent, with the goal to analyze the utterances and identify the most relevant grammatical structures. These grammatical structures were then rearranged to generate gramatically correct answers and implemented into an algorythm. This algorythm was then tested by a high number of people to measure its accuracy
 
 ### Research Setup
 #### Intent
@@ -64,22 +64,37 @@ The NLP Library that was used for this paper is SpaCy. SpaCy is a Python Library
 The methodology that was used in this paper is crowd-testing, which is an approach to recieve feedback from a high number of people
 
 ### Syntactic-analysis-based approach
-The syntactic-analysis-based approach is based on syntactic language parsing. Syntax is the formal grammar of a language. In natural language, syntax provides the rules to put together words to form components of sentences and to put together these components to form sentences (http://l2r.cs.uiuc.edu/~danr/Teaching/CS598-05/Lectures/Roxana.pdf). Parsing is the process of analysing a string of symbols, confirming to the rules of a formal grammar (https://en.wikipedia.org/wiki/Parsing). In linguistics, parsing is used to understand the exact meaning of a specific sentence or a word. The methodology of syntactic parsing that is used for this approach is part-of-speech-tagging (POS), that assigns a tag to each word of the sentence, that contains the part (i.e. noun, verb, adverb etc.) and the role (i.e. subject, object etc.) the word has in the sentence.
+The syntactic-analysis-based approach is based on syntactic language parsing. Syntax is the formal grammar of a language. In natural language, syntax provides the rules to put together words to form components of sentences and to put together these components to form sentences (http://l2r.cs.uiuc.edu/~danr/Teaching/CS598-05/Lectures/Roxana.pdf). Parsing is the process of analysing a string of symbols, confirming to the rules of a formal grammar (https://en.wikipedia.org/wiki/Parsing). In linguistics, parsing is used to understand the exact meaning of a specific sentence or a word. The methodology of syntactic parsing that is used for this approach is part-of-speech-tagging (POS), that assigns a tag to each word of the sentence, that contains the part (i.e. noun, verb, adverb etc.) and the role (i.e. subject, object etc.) of a word in a sentence.
 
 #### Utterance analysis (create dependecy trees)
-Each of the given sample utterances has been processed using SpaCy's syntactic parser, the results have been visualized using dependency trees. The processed and tagged version of the question "What is the location of my car?" looks the follwing:
+Each of the given sample utterances has been processed using SpaCy's syntactic parser. The results have been visualized using Dependency Trees. Dependency Trees The processed and tagged version of the question "What is the location of my car?" looks the follwing:
 <Image Parsed Sentence (Pos and Dep for each word)>
 The dependency tree of the question looks like the following:
 <Image Dependency Tree Question>
 
 #### Create aggregated dependecy trees
+To prove the underlying hypothesis of this paper, that the number of grammatical different utterances for a specific intent are finite, the generated dependecy trees that are similar have been aggregated into dependecy trees with optional nodes. The basis of these trees are the roles of the words, the words have been ignored and the different parts that a node with a role can have are limited to the options that have been used in the example utterances. The aggregated Dependecy Trees with optional nodes and example utterances are listed below:
+<Image Dependecy Trees With Optional Nodes>
+The Dependency Trees correlate with the different types of questions and can be identified by the role of the first node. The three different types of question that have been identified are:
+- Type 1
+- Type 2
+- Type 3
+The following utterances have been excluded from futher analysis due to Dependecy Trees, that do not correlate with English grammar and are gramatically not correct.
+- Excluded Utterances
+
 #### Analyze Question-Answer rearrangement
+To prove the second hypothesis of this paper, that questions can be answered grammatically correct by rearrangement of the parts of speech of the question, the parts of speech of individual utterances have been rearranged to generate a valid response. An example of a question-answer pair can be seen in the follwoing:
+<Example Question With POS and Answer With POS>
+The knowledge that have been gained by rearranging individual utterances have been transferred to the aggregated Dependecy Trees, to develop a universal model for answer rearrangement.
+The three developed POS-Answer-Templates can be seen in the following :
+<Three POS Answer Templates>
+
 #### Implementation
+This chapter briefly summarizes, how the described syntactic-parsing-based approach has been implemented using the SpaCy library in Python.
+
 Part-of-speech-tagging
 Algorythmic Question classification (Type of question)
 Algorythmic Question-Answer rearrangement
-#### Algorithm testing with given utterances
-#### Evaluate algorithm based on new user question (2AFC)
 
 ### Template-based Approach
 #### Utterance analysis (identify available slots)
@@ -88,8 +103,6 @@ Algorythmic Question-Answer rearrangement
 #### Implementation
 Algorythmic slot identification (NER)
 Algorythmic template selection (Type of question)
-#### Algorithm testing with given utterances
-#### Evaluate algorithm based on new user question (2AFC)
 
 ### Preparation for Evaluation
 Host Python Backend on AWS Lambda
@@ -104,6 +117,8 @@ FrontEnd in JS
 Send and Recieve Calls from Backend on AWS
 
 ## Evaluation
+#### Algorithm testing with given utterances
+#### Evaluate algorithm based on new user question (2AFC)
 
 ## Conclusion
 ...
