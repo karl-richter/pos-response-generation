@@ -98,14 +98,62 @@ This chapter briefly summarizes, how the described syntactic-parsing-based appro
 
 Part-of-speech-tagging
 The part-of-speech-tagging in SpaCy is executed by calling the function nlp(). Before using this this function, the SpaCy library needs to be imported and a language model needs to be loaded:
-	import spacy
+```import spacy
 	nlp = spacy.load('en')
 	doc = nlp("where is my car")
+```
+The tags of each node can then be accessed by the attributes of each node of the document.
+```for node in doc:
+		print(node.text, node.dep_, node.pos_)
+```
 Algorythmic Question classification (Type of question)
+The four types of questions that are differentiated in this paper are Adverb-Question, Attribute-Question, Dative-Question and Dative-Object-Question. The function looks for the first node in a document that requires any of the arguments and then generates the response, based on the detected type of question.
+for node in doc:
+```	  if(node.dep_ == 'adv' or node.dep_ == 'advmod'):
+            print('Mode: Adv')
+            printAdv(doc)
+        elif(node.dep_ == 'attr'):
+            print('Mode: Attr')
+            printAttr(doc)
+        elif(node.dep_ == 'dative'):
+            print('Mode: Dative')
+            printDative(doc)
+        elif(node.dep_ == 'dobj'):
+            print('Mode: Dative Object')
+            printDativeObj(doc)
+```
 Algorythmic Question-Answer rearrangement
-
+The rearrangement of words of the question to generate a response depends on the detected type of question. For each type of question, the words are printed in a different order. The implementation uses recursive functions to also print child-nodes of nodes. The following function is an example of the implementation for the question-type Adverb-Question:
+```def printAdv(tree):
+    for node in tree:
+        if(node.dep_ == 'ROOT'):
+            printSubject(node.children)
+            printVerbPass(node.children)
+            print(node.dep_, node.text)
+            reply.append(node.text)
+            print('-------')
+            printVerb(node.children)
+            printObject(node.children)
+            printPrep(node.children)
+            print('MANUAL at')
+            reply.append('at')
+            print('-------')
+```
+The print functions for the parts of speech do in some cases also print nodes of themselfes, if available. An example of this is the function printObject():
+```# Print Object
+		def printObject(tree):
+    	for node in tree:
+        if(node.dep_ == 'pobj' or node.dep_ == 'dobj'):
+            printDetPoss(node.children)
+            print(node.dep_, node.text)
+            reply.append(changePerson(node.text))
+            print('-------')
+            printPrep(node.children)
+```
 ### Template-based Approach
+The template-based approach is based on templates with slots, that are filled to generate a response. The templates are generated manually and need to fit the type of question that the user asks.
 #### Utterance analysis (identify available slots)
+Each of the utterances has been analysed manually to detect slots that can later be filled with dynamic content. Two two slots that have been detected in the analysed utterances are _carSlot_ and _locationSlot_.
 #### Create templates (for different utterances)
 #### Analyze patterns between utterances and responses
 #### Implementation
