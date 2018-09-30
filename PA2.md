@@ -98,11 +98,9 @@ This chapter briefly summarizes, how the described syntactic-parsing-based appro
 
 Part-of-speech-tagging
 The part-of-speech-tagging in SpaCy is executed by calling the function nlp(). Before using this this function, the SpaCy library needs to be imported and a language model needs to be loaded:
-	```python
 	import spacy
 	nlp = spacy.load('en')
 	doc = nlp("where is my car")
-	```
 Algorythmic Question classification (Type of question)
 Algorythmic Question-Answer rearrangement
 
