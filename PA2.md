@@ -47,6 +47,10 @@ https://nlp.stanford.edu/software/dependencies_manual.pdf
 ## Analysis
 This paper analyzes two approaches to generate responses for a number of utterances of the intent 'getCarLocation'. The goal of this paper is to evaluate, whether a syntactic-analysis-based-approach for natural language response generation (NLG) in voice assistant applications archives better results, than a template-based approach. The template-based approach for NLG is currently state-of-the-art and used commercial speech applications such as the Google Assistant and Amazon Alexa. Although generating natural language by using a template does not correspond to the scientific definition of NLG (https://www.mitpressjournals.org/doi/pdfplus/10.1162/0891201053630291), that is supported by most linguists, it  combines the stability that is needed for commercial applications and the individuality that comes with generated replies. The approach that is developed in this paper, is based on analyzing the syntax of a question and identifying the role each word has in the overall sentence. 
 
+
+### Problem Analysis
+Description of current Voice Assistant Response Generation
+
 ### Hypothesis
 The underlying hypothesis for this research is, that the number of grammatical different utterances for a specific intent are finite and all of these utteranes can be grammatically correct answered by rearrangement of the utterance. Therefore, a limited number of people were asked for different utterances for a specific intent, with the goal to analyze the utterances and identify the most relevant grammatical structures. These grammatical structures were then rearranged to generate gramatically correct answers and implemented into an algorythm. This algorythm was then tested by a high number of people to measure its accuracy
 
@@ -93,6 +97,12 @@ The three developed POS-Answer-Templates can be seen in the following :
 This chapter briefly summarizes, how the described syntactic-parsing-based approach has been implemented using the SpaCy library in Python.
 
 Part-of-speech-tagging
+The part-of-speech-tagging in SpaCy is executed by calling the function nlp(). Before using this this function, the SpaCy library needs to be imported and a language model needs to be loaded:
+	```python
+	import spacy
+	nlp = spacy.load('en')
+	doc = nlp("where is my car")
+	```
 Algorythmic Question classification (Type of question)
 Algorythmic Question-Answer rearrangement
 
@@ -119,6 +129,7 @@ Send and Recieve Calls from Backend on AWS
 ## Evaluation
 #### Algorithm testing with given utterances
 #### Evaluate algorithm based on new user question (2AFC)
+-> use SWOT for result summary & conclusion
 
 ## Conclusion
 ...
