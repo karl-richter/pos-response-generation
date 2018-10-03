@@ -47,9 +47,9 @@ https://nlp.stanford.edu/software/dependencies_manual.pdf
 ## Analysis
 This paper analyzes two approaches to generate responses for a number of utterances of the intent 'getCarLocation'. The goal of this paper is to evaluate, whether a syntactic-analysis-based-approach for natural language response generation (NLG) in voice assistant applications archives better results, than a template-based approach. The template-based approach for NLG is currently state-of-the-art and used commercial speech applications such as the Google Assistant and Amazon Alexa. Although generating natural language by using a template does not correspond to the scientific definition of NLG (https://www.mitpressjournals.org/doi/pdfplus/10.1162/0891201053630291), that is supported by most linguists, it  combines the stability that is needed for commercial applications and the individuality that comes with generated replies. The approach that is developed in this paper, is based on analyzing the syntax of a question and identifying the role each word has in the overall sentence. 
 
-
 ### Problem Analysis
 Description of current Voice Assistant Response Generation
+The underlying problem, that the developed syntactic-analysis-based approach aims to solve, is to make the communication between humans and voice assistant applications more natural. To expose the advanced technology that is used in current voice assistants, the 
 
 ### Hypothesis
 The underlying hypothesis for this research is, that the number of grammatical different utterances for a specific intent are finite and all of these utteranes can be grammatically correct answered by rearrangement of the utterance. Therefore, a limited number of people were asked for different utterances for a specific intent, with the goal to analyze the utterances and identify the most relevant grammatical structures. These grammatical structures were then rearranged to generate gramatically correct answers and implemented into an algorythm. This algorythm was then tested by a high number of people to measure its accuracy
@@ -152,13 +152,43 @@ The print functions for the parts of speech do in some cases also print nodes of
 ```
 ### Template-based Approach
 The template-based approach is based on templates with slots, that are filled to generate a response. The templates are generated manually and need to fit the type of question that the user asks.
-#### Utterance analysis (identify available slots)
-Each of the utterances has been analysed manually to detect slots that can later be filled with dynamic content. Two two slots that have been detected in the analysed utterances are _carSlot_ and _locationSlot_.
-#### Create templates (for different utterances)
-#### Analyze patterns between utterances and responses
+
+#### Slot identification (identify available slots)
+The goal of the utterance analysis in the template-based approach is to idetify the available slots in the response, that are later filled with the appropriate content. The more slots a template contains, the less standardized a response seems, but at the same time the response is less  Each of the utterances has been analysed manually to detect slots that can later be filled with dynamic content. Two two slots that have been detected in the analysed utterances are _carSlot_ and _locationSlot_. Not every utterances does contain both of the slots. An example of an utterance with the identified slots can be seen in the follwoing:
+<Image utterances with marked slots>
+
+#### Template creation (for different utterances)
+Based on the first hypothesis of this paper, that the number of grammatical different utterances for a specific intent are finite, the same aggregation of the utterances into types of questions have been transferred from the syntactic-analysis-based approach. The three different types of question that have been identified are:
+- Type 1
+- Type 2
+- Type 3
+For each of the three types of question, each one template has been created, that is a grammatically correct answer for each of the utterances. Then three templates that have been created are:
+- Template 1
+- Template 2
+- Template 3
+Due to the fact, that not every question contains both of the identified slots, univeral fallback values for both of the slots have been used for the implementation. The fallback values for both of the utterances are:
+- Fallback Slot 1
+- Fallback Slot 2
+
 #### Implementation
 Algorythmic slot identification (NER)
+Ideally, a custom Named-Entity-Recognition model for the two slots would have been implemented. 
+
 Algorythmic template selection (Type of question)
+For the template selection, the same algorythm, that has been developed in the syntactic-analysis-based approach, was reused to select a template based on the type of question. The implementation of the algorithm looks like the following: 
+```	  if(node.dep_ == 'adv' or node.dep_ == 'advmod'):
+            print('Mode: Adv')
+            printAdv(doc)
+        elif(node.dep_ == 'attr'):
+            print('Mode: Attr')
+            printAttr(doc)
+        elif(node.dep_ == 'dative'):
+            print('Mode: Dative')
+            printDative(doc)
+        elif(node.dep_ == 'dobj'):
+            print('Mode: Dative Object')
+            printDativeObj(doc)
+```
 
 ### Preparation for Evaluation
 Host Python Backend on AWS Lambda
