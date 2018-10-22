@@ -1,0 +1,220 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+            function getResponseOne(){
+                const req = new XMLHttpRequest();
+                const url='https://480jprba40.execute-api.eu-central-1.amazonaws.com/v1/pos-response-generation?question=' + document.getElementById('questionTextfield').value;
+                req.open("GET", url);
+                req.send();
+                req.onreadystatechange=(e)=>{
+                    if (req.readyState == 4 && req.status == 200) {
+                        var jsonResponse = JSON.parse(req.response);
+                        document.getElementById('one').innerHTML = jsonResponse.pos;
+                        document.getElementById('two').innerHTML = jsonResponse.ner;
+                        //document.getElementById('one').style.display = 'block';
+                        //document.getElementById('two').style.display = 'block';
+                        $("#one").fadeIn();
+                        $("#two").fadeIn();
+                    }
+                }
+            }
+            function sendDecision(decision) { 
+                var timestamp = new Date(Date.now()).toLocaleString();
+                var pos = document.getElementById('one').innerHTML;
+                var ner = document.getElementById('two').innerHTML;
+                var selectedPOS = decision;
+                var description = document.getElementById('questionTextfield').value;
+                // Returns successful data submission message when the entered information is stored in database.
+                var dataString = 'timestamp=' + timestamp + '&pos=' + pos + '&ner=' + ner + '&selectedPOS=' + selectedPOS + '&description=' + description;
+                console.log(dataString);
+                // AJAX code to submit form.
+                    $.ajax({
+                        type: "POST",
+                        url: "ajaxjs.php",
+                        data: dataString,
+                        cache: false,
+                        success: function(html) {
+                            //alert('Thank you for your evaluation! Feel free to try another way of asking.');
+                        }
+                    });
+                //document.getElementById('one').style.display = 'none';
+                //document.getElementById('two').style.display = 'none';
+                $("#one").fadeOut();
+                $("#two").fadeOut();
+                document.getElementById('questionTextfield').value = '';
+                $("#success_field").fadeIn();
+                $("#success_field").delay(7000).fadeOut();
+            }
+                
+    </script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        #success_field {
+            float: left;
+            width: 100vw;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            background-color:limegreen;
+            color: #ffffff;
+            text-align: center;
+            display: none;
+        }
+
+        #introduction {
+            width: 60vw;
+            padding-left: 20vw;
+            margin-top: 20vh;
+        }
+
+        #questionTextfield {
+            font-size: 22px;
+            width: 50vw;
+            height: 50px;
+            padding: 10px;
+            margin: 0;
+            border: none;
+            background-color:whitesmoke;
+        }
+
+        #generateButton {
+            font-size: 18px;
+            width: 10vw;
+            height: 50px;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            outline: inherit;
+            background-color: darkblue;
+            color: white;
+        }
+
+        #generateButton:hover {
+            background-color: blue;
+        }
+
+        #form {
+            margin-left: 20vw;
+            margin-top: 7vh;
+            margin-bottom: 30px;
+        }
+
+        .response {
+            font-size: 20px;
+            width: 60vw;
+            height: 40px;
+            padding: 10px;
+            margin: 0;
+            margin-top: 10px;
+            margin-left: 20vw;
+            background-color:whitesmoke;
+            display: none;
+            border-radius: 5px;
+            line-height: 40px;
+        }
+
+        .response:hover {
+            cursor: pointer;
+            color: white;
+            background-color:dimgrey;
+        }
+
+        #dhbw {
+            position: absolute;
+            bottom: 30px;
+            width: 95vw;
+            height: 30px;
+            background-image: url("./dhbw.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+        }
+        
+        @media only screen and (max-width: 1100px) {
+            h1 {
+                font-size: 40pt;
+            }
+            
+            p {
+                font-size: 19pt;
+            }
+
+            #success_field {
+                font-size: 20pt;
+            }
+
+            #introduction {
+                width: 90vw;
+                padding-left: 5vw;
+                margin-top: 5vh;
+            }
+
+            #form {
+                margin-left: 5vw;
+                margin-top: 4vh;
+                margin-bottom: 30px;
+            }
+
+            #questionTextfield {
+                font-size: 30px;
+                width: 65vw;
+                height: 80px;
+                padding: 30px;
+                margin: 0;
+                border: none;
+                background-color:whitesmoke;
+            }
+
+            #generateButton {
+                font-size: 25px;
+                width: 20vw;
+                height: 80px;
+                border: none;
+                padding: 0;
+                margin: 0;
+                cursor: pointer;
+                outline: inherit;
+                background-color: darkblue;
+                color: white;
+                -webkit-appearance: none;
+                border-radius: 0;
+            }
+
+            .response {
+                font-size: 30px;
+                width: 80vw;
+                height: auto;
+                padding: 30px;
+                margin-left: 5vw;
+                margin-top: 20px;
+                line-height: 40px;
+            }
+
+            #dhbw {
+                height: 60px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="success_field">Thank you for your evaluation! Feel free to try another way of asking.</div>
+    <div id="introduction">
+        <h1>Reseach survey</h1>
+        <p>This survey is part of a research on a new approach of Natural Language Generation in Voice Assistant Applications. Please enter different versions of how you would ask a Voice Assistant Application (i.e. <a href="https://assistant.google.com/services/a/uid/000000642e3973e1">Mercedes Me App</a>) for the <b>location of your car</b>. After clicking the button, you will recieve two different versions of a response to your question. Please evaluate which answer fit's your question best <b>by clicking on it</b>. Feel free to enter up to 10 different versions of the question.</p>
+    </div>
+    <form id="form">
+        <input id="questionTextfield" type="text" placeholder="Where did I park my car?">
+        <input id="generateButton" type="button" onclick="getResponseOne()" value="Generate">
+    </form>
+    <div id="one" class="response" onclick="sendDecision('0')"> </div>
+    <div id="two" class="response" onclick="sendDecision('1')"> </div>
+    <div id="dhbw"></div>
+</body>
